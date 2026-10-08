@@ -1,0 +1,15 @@
+{
+  "id": "/",
+  "name": "Myhabit — สร้างจังหวะที่ใช่ในทุกวัน",
+  "short_name": "Myhabit",
+  "start_url": "/today",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F6F5F0",
+  "theme_color": "#F6F5F0",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

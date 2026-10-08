@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ตารางวินัยประจำวัน</title>
+<meta name="description" content="เช็กลิสต์นิสัยรายวัน พร้อมสรุปรายเดือนและรายปี">
+<meta name="theme-color" content="#F5F6F8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E1015" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="วินัย">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icon.svg">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>[hidden]{display:none!important}body{margin:0}:root{padding-top:env(safe-area-inset-top,0px)}</style>
+</head>
+<body>
+<main class="auth" id="auth" hidden>
+  <div class="auth-card">
+    <div class="auth-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg></div>
+    <h1>ตารางวินัยประจำวัน</h1>
+    <p>ล็อกอินด้วยอีเมลเพื่อเก็บข้อมูลไว้ในบัญชี เปิดจากมือถือหรือคอมก็เห็นข้อมูลเดียวกัน ไม่ต้องตั้งรหัสผ่าน</p>
+    <form id="authForm" novalidate>
+      <label for="email">อีเมล</label>
+      <input id="email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com" required>
+      <button id="authBtn" type="submit">ส่งลิงก์เข้าสู่ระบบ</button>
+    </form>
+    <p class="amsg" id="authMsg" role="status"></p>
+    <button class="ghost" id="skip" type="button">ใช้ก่อนโดยไม่ล็อกอิน (เก็บในเครื่องนี้)</button>
+  </div>
+</main>
+<div class="wrap" id="app">
+  <div class="top">
+    <div><h1 id="greet">อรุณสวัสดิ์</h1><p id="today"></p></div>
+    <span class="sync" id="sync"><i></i><span>ในเครื่องนี้</span></span>
+  </div>
+
+  <!-- DAY -->
+  <section class="view" id="v-day">
+    <div class="hero">
+      <div class="hero-main">
+        <div class="ring" id="ring">
+          <svg width="112" height="112" viewBox="0 0 112 112"><circle class="trk" cx="56" cy="56" r="48" fill="none" stroke-width="10"/><circle class="val" id="ringVal" cx="56" cy="56" r="48" fill="none" stroke-width="10" stroke-linecap="round" stroke-dasharray="301.6" stroke-dashoffset="301.6"/></svg>
+          <div class="num"><b id="dCount">0</b><span>จาก 6</span></div>
+        </div>
+        <div class="hero-txt">
+          <h2 id="dTitle">เริ่มวันใหม่</h2>
+          <p id="dMsg"></p>
+          <span class="chip" id="dPlan"></span>
+        </div>
+      </div>
+      <div class="week" id="week"></div>
+    </div>
+    <div class="alert" id="dAlert" hidden></div>
+    <div id="groups" class="view" style="gap:18px"></div>
+  </section>
+
+  <!-- MONTH -->
+  <section class="view" id="v-month" hidden>
+    <div class="phead">
+      <div><h2 id="mLabel"></h2><p>แตะวันที่เพื่อแก้ไข</p></div>
+      <div class="arrows"><button id="mPrev" aria-label="เดือนก่อนหน้า"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button><button id="mNext" aria-label="เดือนถัดไป"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button></div>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><b id="mAvg">–</b><span>ทำได้เฉลี่ย</span></div>
+      <div class="kpi"><b id="mGood">0</b><span>วันที่ผ่าน</span></div>
+      <div class="kpi"><b id="mStreak">0</b><span>สตรีคยาวสุด</span></div>
+    </div>
+    <div class="panel">
+      <div class="cal" id="mCal"></div>
+      <div class="legend">น้อย <i style="background:var(--h0)"></i><i style="background:var(--h1)"></i><i style="background:var(--h2)"></i><i style="background:var(--h3)"></i><i style="background:var(--h4)"></i> ครบ</div>
+    </div>
+    <div class="panel"><h3>แยกตามนิสัย</h3><div class="hb" id="mHabits"></div></div>
+  </section>
+
+  <!-- YEAR -->
+  <section class="view" id="v-year" hidden>
+    <div class="phead">
+      <div><h2 id="yLabel"></h2><p>เปอร์เซ็นต์ที่ทำได้รายเดือน</p></div>
+      <div class="arrows"><button id="yPrev" aria-label="ปีก่อนหน้า"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button><button id="yNext" aria-label="ปีถัดไป"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button></div>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><b id="yDays">0</b><span>วันที่บันทึก</span></div>
+      <div class="kpi"><b id="yGood">0</b><span>วันที่ผ่าน</span></div>
+      <div class="kpi"><b id="yStreak">0</b><span>สตรีคตอนนี้</span></div>
+    </div>
+    <div class="panel"><div class="months" id="yMonths"></div></div>
+    <div class="panel"><h3>ทั้งปีในภาพเดียว</h3><div class="ys"><div class="yg" id="yGrid"></div></div></div>
+    <div class="panel"><h3>นิสัยทั้งปี</h3><div class="hb" id="yHabits"></div></div>
+  </section>
+
+  <p class="foot">ผ่าน = ทำได้ 4 จาก 6 ข้อ · พลาดได้ 1 วัน แต่ห้ามพลาด 2 วันติด</p>
+  <div class="acct"><span id="acct"></span><button id="signout" type="button"></button></div>
+</div>
+
+<div class="tabbar"><nav role="tablist">
+  <button role="tab" id="t-day" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg>วันนี้</button>
+  <button role="tab" id="t-month" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>เดือน</button>
+  <button role="tab" id="t-year" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V11M10 20V6M15 20v-7M20 20V4"/></svg>ปี</button>
+</nav></div>
+
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>

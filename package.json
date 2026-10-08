@@ -1,0 +1,41 @@
+{
+  "name": "myhabit",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "engines": {
+    "node": ">=26.11.1"
+  },
+  "packageManager": "npm@12.2.0",
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "preview": "nuxt preview",
+    "typecheck": "nuxt prepare && tsc --noEmit",
+    "test": "vitest run",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "@nuxt/ui": "4.11.3",
+    "@nuxtjs/i18n": "10.6.0",
+    "@nuxtjs/supabase": "2.0.10",
+    "@supabase/supabase-js": "2.117.3",
+    "nuxt": "4.6.0",
+    "qrcode": "1.5.4",
+    "vue": "3.5.43"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.0",
+    "@iconify-json/lucide": "1.2.141",
+    "@types/node": "26.6.4",
+    "@types/qrcode": "1.5.6",
+    "typescript": "7.0.2",
+    "vitest": "5.0.3"
+  },
+  "allowScripts": {
+    "esbuild@0.25.12": true,
+    "esbuild@0.27.7": true,
+    "esbuild@0.28.2": true,
+    "vue-demi@0.14.10": true
+  }
+}

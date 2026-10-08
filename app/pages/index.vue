@@ -1,0 +1,21 @@
+<script setup lang="ts">
+const { t, locale } = useI18n()
+const text = (th: string, en: string) => locale.value === 'en' ? en : th
+const { state } = useWorkspace()
+const habits = computed(() => state.value.habits.filter(habit => habit.active).slice(0, 3))
+</script>
+<template>
+ <div class="page-wrap welcome-page">
+  <section class="welcome-layout">
+   <div class="welcome-copy"><h1>{{ text('สร้างจังหวะที่ใช่','Find your rhythm') }}<br><span class="accent">{{ text('ในทุกวัน','Every day') }}</span></h1><p>{{ text('ติดตามสิ่งที่ตั้งใจทำ มองเห็นความคืบหน้า และค่อย ๆ ไปถึงเป้าหมายในแบบของคุณ','Keep track of your intentions, see your progress and move towards your goals at your own pace.') }}</p><div class="flex flex-wrap gap-3"><NuxtLink to="/today" class="btn-primary no-underline">{{ text('เริ่มจากวันนี้','Start with today') }}<UIcon name="i-lucide-arrow-right" class="size-4"/></NuxtLink><NuxtLink to="/tools" class="btn-quiet no-underline">{{ text('ดูเครื่องมือ','Explore tools') }}</NuxtLink></div></div>
+   <div class="welcome-plan"><div class="flex items-center justify-between gap-3"><h2>{{ text('จังหวะของคุณ','Your rhythm') }}</h2><UIcon name="i-lucide-sprout" class="size-7 success"/></div><p class="muted">{{ text('เริ่มจากสิ่งเล็ก ๆ วันนี้','Start with something small today') }}</p><div v-for="habit in habits" :key="habit.id" class="welcome-habit"><UIcon name="i-lucide-circle" class="size-5 success"/><span>{{ habit.title }}</span><span class="mono muted">{{ habit.time }}</span></div><NuxtLink to="/today" class="welcome-plan-link">{{ text('เปิดแผนของฉัน','Open my daily plan') }}<UIcon name="i-lucide-arrow-up-right" class="size-4"/></NuxtLink></div>
+  </section>
+  <section class="welcome-principles"><div><UIcon name="i-lucide-calendar-days" class="size-5 success"/><h2>{{ text('จัดจังหวะ','Plan your day') }}</h2><p>{{ text('วางกิจวัตรตามเวลาที่เหมาะกับคุณ','Plan routines at times that work for you.') }}</p></div><div><UIcon name="i-lucide-circle-check" class="size-5 success"/><h2>{{ text('เช็กอิน','Check in') }}</h2><p>{{ text('ใช้เวลาเพียงครู่เดียวในแต่ละวัน','Take a moment for yourself each day.') }}</p></div><div><UIcon name="i-lucide-chart-no-axes-column-increasing" class="size-5 success"/><h2>{{ text('มองย้อนกลับ','See your progress') }}</h2><p>{{ text('เห็นพัฒนาการโดยไม่ต้องกดดันตัวเอง','See how far you have come without pressure.') }}</p></div></section>
+  <p class="welcome-storage muted"><UIcon name="i-lucide-hard-drive" class="size-4"/>{{ t('savedLocally') }} · {{ text('ซิงก์ข้ามอุปกรณ์ได้เมื่อเข้าสู่ระบบ','Sign in to sync across devices') }}</p>
+ </div>
+</template>
+<style scoped>
+.welcome-page{padding-top:clamp(40px,8vw,112px)}.welcome-layout{display:grid;gap:48px;align-items:center}.welcome-copy h1{margin:0;font-size:clamp(2.5rem,4.5vw,4rem);line-height:1.25;font-weight:600;letter-spacing:-.03em}.welcome-copy>p{margin:24px 0 32px;max-width:48ch;line-height:1.9;color:var(--mh-ink-soft);font-size:1.125rem}.welcome-plan{padding:28px;background:var(--mh-success-soft);border-radius:14px;min-width:0}.welcome-plan h2{margin:0;font-size:1.4rem;font-weight:600}.welcome-plan>p{font-size:.9rem;margin:8px 0 24px}.welcome-habit{display:flex;align-items:center;gap:12px;padding:18px 0;border-top:1px solid var(--mh-line);font-size:.95rem}.welcome-habit>span:nth-child(2){flex:1}.welcome-habit>.mono{font-size:.75rem}.welcome-plan-link{display:flex;align-items:center;justify-content:space-between;min-height:44px;padding-top:20px;color:var(--mh-success);font-size:.9rem;text-decoration:none;font-weight:500}.welcome-principles{display:grid;gap:32px;margin-top:64px;padding-top:32px;border-top:1px solid var(--mh-line)}.welcome-principles h2{font-size:1.125rem;margin:12px 0 8px;font-weight:500}.welcome-principles p{margin:0;color:var(--mh-muted);font-size:.95rem}.welcome-storage{display:flex;align-items:center;gap:8px;margin:40px 0 0;font-size:.8rem;flex-wrap:wrap}
+@media(min-width:800px){.welcome-layout{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}.welcome-principles{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:480px){.welcome-layout{gap:32px}.welcome-plan{padding:24px}.welcome-principles{margin-top:40px;gap:24px}}
+</style>

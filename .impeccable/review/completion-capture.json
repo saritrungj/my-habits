@@ -1,0 +1,16 @@
+{
+  "rates": {
+    "base": "EUR",
+    "date": "2026-10-07",
+    "fetchedAt": "2026-10-08T08:06:32.734Z",
+    "provider": "ECB",
+    "rates": {
+      "EUR": 1,
+      "THB": 37.661,
+      "USD": 1.1177,
+      "JPY": 176.85,
+      "GBP": 0.84645
+    }
+  },
+  "errors": []
+}

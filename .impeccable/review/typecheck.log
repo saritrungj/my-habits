@@ -1,0 +1,9 @@
+
+> myhabit@2.0.0 typecheck
+> nuxt prepare && tsc --noEmit
+
+i Nuxt Icon server bundle mode is set to local
+[nuxt:icon] √ Nuxt Icon discovered local-installed 1 collections: lucide
+• A dev server (PID 10984) is using .nuxt; refreshing templates in place without clearing it.
+i Nuxt Icon client bundle consist of 87 icons with 22.74KB(uncompressed) in size
+* Types generated in .nuxt.
